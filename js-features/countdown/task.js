@@ -15,21 +15,28 @@ let timerId = setInterval(() => {
     timerElement.textContent = formatTime(totalSeconds);
     
     if (totalSeconds <= 0) {
-        clearInterval(timerId);
-        timerElement.textContent = '00:00:00';
-        alert('Вы победили в конкурсе!');
+    clearInterval(timerId);
+    timerElement.textContent = '00:00:00';
+    alert('Вы победили в конкурсе!');
+    
+    if (confirm('Хотите скачать файл с призом?')) {
+        const downloadLink = document.createElement('a');
+        downloadLink.href = 'https://raw.githubusercontent.com/EwgeniyNikol/bhj-homeworks/master/assets/img/volvo1871.png';
+        downloadLink.download = 'volvo1871.png';
+        downloadLink.target = '_blank'; 
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
         
-        if (confirm('Хотите скачать файл с призом?')) {
-            const link = document.createElement('a');
-            link.href = 'https://raw.githubusercontent.com/EwgeniyNikol/bhj-homeworks/master/assets/img/volvo1871.png';
-            link.download = 'volvo1871.png'; 
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+        setTimeout(() => {
+                document.body.removeChild(downloadLink);
+            }, 1000);
+            
+            window.location.href = 'https://raw.githubusercontent.com/EwgeniyNikol/bhj-homeworks/master/assets/img/volvo1871.png?force=download';
         }
         
         setTimeout(() => {
             window.open('https://raw.githubusercontent.com/EwgeniyNikol/bhj-homeworks/master/assets/img/volvo1871.png', '_blank');
-        }, 500); 
+        }, 500);
     }
 }, 1000);
