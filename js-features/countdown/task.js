@@ -21,7 +21,7 @@ let timerId = setInterval(() => {
         
         if (confirm('Хотите скачать файл с призом?')) {
             const link = document.createElement('a');
-            link.href = '/assets/img/volvo1871.png';
+            link.href = 'https://github.com/EwgeniyNikol/bhj-homeworks/blob/master/assets/img/volvo1871.png';
             link.download = 'volvo1871.png'; 
             document.body.appendChild(link);
             link.click();
@@ -29,7 +29,7 @@ let timerId = setInterval(() => {
         }
         
         setTimeout(() => {
-            window.open('/assets/img/volvo1871.png', '_blank');
+            window.open('https://github.com/EwgeniyNikol/bhj-homeworks/blob/master/assets/img/volvo1871.png', '_blank');
         }, 500); 
     }
 }, 1000);
