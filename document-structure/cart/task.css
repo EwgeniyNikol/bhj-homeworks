@@ -89,3 +89,86 @@ body {
 .product-shadow {
   position: absolute;
 }
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product {
+  flex: 0 0 calc(50% - 10px);
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+/* Стили для корзины */
+.cart {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  display: none;
+}
+
+.cart.visible {
+  display: block;
+}
+
+.cart__clear {
+  color: #ff4444;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+  display: none;
+  margin-top: 10px;
+  text-align: right;
+}
+
+.cart__clear:hover {
+  color: #cc0000;
+}
+
+.cart__product {
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+}
+
+.cart__product-remove {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 20px;
+  height: 20px;
+  background-color: #ff4444;
+  color: white;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  border: 2px solid white;
+  z-index: 2;
+}
+
+.cart__product:hover .cart__product-remove {
+  display: flex;
+}
+
+.cart__product-remove:hover {
+  background-color: #cc0000;
+  transform: scale(1.1);
+}
+
+.flying-image {
+  position: fixed !important;
+  z-index: 10000;
+  pointer-events: none;
+  border-radius: 6px;
+  border: 2px dashed green;
+  object-fit: contain;
+}
