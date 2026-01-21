@@ -1,79 +1,57 @@
-    let tasks = [];
-    const STORAGE_KEY = 'todo_tasks';
-    const tasksList = document.getElementById('tasks__list');
-    const taskInput = document.getElementById('task__input');
+let tasks = [];
+const STORAGE_KEY = 'todo_tasks';
+const tasksList = document.getElementById('tasks__list');
+const taskInput = document.getElementById('task__input');
 
-    const generateId = () => Date.now().toString(36) + Math.random().toString(36).substr(2);
-    const saveTasks = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+const generateId = () => Date.now().toString(36) + Math.random().toString(36).substr(2);
+const saveTasks = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
 
-    const loadTasks = () => {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) tasks = JSON.parse(saved) || [];
-    };
+const loadTasks = () => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) tasks = JSON.parse(saved) || [];
+};
 
-    const createTask = (task) => {
-        const taskEl = document.createElement('div');
-        taskEl.className = 'task';
-        taskEl.dataset.id = task.id;
-        
-        const title = document.createElement('div');
-        title.className = 'task__title';
-        title.textContent = task.text;
-        
-        const removeBtn = document.createElement('a');
-        removeBtn.href = '#';
-        removeBtn.className = 'task__remove';
-        removeBtn.innerHTML = '&times;';
-        removeBtn.onclick = (e) => {
-            e.preventDefault();
-            deleteTask(task.id);
-        };
-        
-        taskEl.append(title, removeBtn);
-        return taskEl;
-    };
-
-    const addTask = (text) => {
-        text = text.trim();
-        if (!text) return alert('Введите текст задачи!');
-        
-        tasks.push({id: generateId(), text, createdAt: new Date().toISOString()});
-        saveTasks();
-        renderTasks();
-        taskInput.value = '';
-        taskInput.focus();
-    };
-
-    const deleteTask = (id) => {
-        tasks = tasks.filter(task => task.id !== id);
-        saveTasks();
-        renderTasks();
-    };
-
-    const renderTasks = () => {
-        tasksList.innerHTML = '';
-        tasks.forEach(task => tasksList.appendChild(createTask(task)));
-    };
+const addTask = (text) => {
+    text = text.trim();
+    if (!text) return alert('Введите текст задачи!');
     
-    document.addEventListener('DOMContentLoaded', () => {
-        loadTasks();
-        renderTasks();
-        taskInput.focus();
-    });
+    tasks.push({id: generateId(), text, createdAt: new Date().toISOString()});
+    saveTasks();
+    renderTasks();
+    taskInput.value = '';
+    taskInput.focus();
+};
 
-    document.getElementById('tasks__form').onsubmit = (e) => {
-        e.preventDefault();
-        addTask(taskInput.value);
-    };
+const deleteTask = (id) => {
+    tasks = tasks.filter(task => task.id !== id);
+    saveTasks();
+    renderTasks();
+};
 
-    taskInput.onkeydown = (e) => {
-        if (e.key === 'Enter') {
+const renderTasks = () => {
+    tasksList.innerHTML = tasks.map(task => `
+        <div class="task" data-id="${task.id}">
+            <div class="task__title">${task.text}</div>
+            <a href="#" class="task__remove">&times;</a>
+        </div>
+    `).join('');
+    
+    tasksList.addEventListener('click', (e) => {
+        if (e.target.classList.contains('task__remove')) {
             e.preventDefault();
-            addTask(taskInput.value);
+            const taskElement = e.target.closest('.task');
+            deleteTask(taskElement.dataset.id);
         }
-    };
+    });
+};
 
-    document.getElementById('tasks__add').onclick = (e) => {
-        e.preventDefault();
-        addTask(taskInput.value);
-    };
+document.addEventListener('DOMContentLoaded', () => {
+    loadTasks();
+    renderTasks();
+    taskInput.focus();
+});
+
+document.getElementById('tasks__form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    addTask(taskInput.value);
+});
