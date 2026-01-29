@@ -1,14 +1,13 @@
 const editor = document.getElementById('editor');
 
 window.addEventListener('DOMContentLoaded', () => {
-    const savedText = localStorage.getItem('editorText');
-    if (savedText) {
-        editor.value = savedText;
-    }
-});
-
-editor.addEventListener('input', () => {
-    localStorage.setItem('editorText', editor.value);
+    editor.value = localStorage.getItem('editorText');
+    
+    editor.addEventListener('input', () => {
+        localStorage.setItem('editorText', editor.value);
+    });
+    
+    addClearButton();
 });
 
 const addClearButton = () => {
@@ -22,5 +21,3 @@ const addClearButton = () => {
     
     editor.parentNode.appendChild(clearButton);
 };
-
-window.addEventListener('DOMContentLoaded', addClearButton);

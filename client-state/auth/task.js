@@ -44,12 +44,13 @@ class AuthUI {
         this.userIdSpan.textContent = userId;
         this.signinDiv.classList.remove('signin_active');
         this.welcomeDiv.classList.add('welcome_active');
+        this.signinForm.reset(); 
     }
     
     showLoginForm() {
         this.welcomeDiv.classList.remove('welcome_active');
         this.signinDiv.classList.add('signin_active');
-        this.signinForm.reset();
+        this.signinForm.reset(); 
     }
     
     showError(message) {
